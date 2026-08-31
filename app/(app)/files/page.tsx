@@ -22,8 +22,8 @@ export default async function FilesPage({
   return (
     <section className="space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-gray-900">Files</h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Files</h1>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
           PDF only, up to 15 MB each — resumes, cover letters, certifications, letters of
           recommendation. Only you can see or download these.
         </p>
@@ -32,23 +32,23 @@ export default async function FilesPage({
       <FileUpload />
 
       {queryError === 'download' && (
-        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/50 dark:text-red-300">
           Could not generate a download link. Try again.
         </p>
       )}
 
       {loadError ? (
-        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/50 dark:text-red-300">
           {loadError}
         </p>
       ) : files.length === 0 ? (
-        <p className="rounded-md border border-dashed border-gray-300 p-6 text-center text-gray-500">
+        <p className="rounded-md border border-dashed border-gray-300 p-6 text-center text-gray-500 dark:border-gray-700 dark:text-gray-400">
           No files yet. Upload your first PDF above.
         </p>
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
-          <table className="min-w-full divide-y divide-gray-200 text-sm">
-            <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-gray-500">
+        <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+          <table className="min-w-full divide-y divide-gray-200 text-sm dark:divide-gray-800">
+            <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-gray-500 dark:bg-gray-800 dark:text-gray-400">
               <tr>
                 <th className="px-4 py-2">Name</th>
                 <th className="px-4 py-2">Size</th>
@@ -56,7 +56,7 @@ export default async function FilesPage({
                 <th className="px-4 py-2" />
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
               {files.map((f) => (
                 <FileRow key={f.name} file={f} />
               ))}

@@ -20,9 +20,9 @@ function todayISO(): string {
 }
 
 const fieldBase =
-  'rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600';
+  'rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:[color-scheme:dark]';
 const field = `mt-1 w-full ${fieldBase}`;
-const errText = 'mt-1 text-sm text-red-600';
+const errText = 'mt-1 text-sm text-red-600 dark:text-red-400';
 
 export default function ApplicationForm(props: Props) {
   const isEdit = props.mode === 'edit';
@@ -36,13 +36,13 @@ export default function ApplicationForm(props: Props) {
       {isEdit && <input type="hidden" name="id" defaultValue={a!.id} />}
 
       {state.error && (
-        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/50 dark:text-red-300">
           {state.error}
         </p>
       )}
 
       <div>
-        <label htmlFor="company_name" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="company_name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Business name
         </label>
         <input
@@ -56,7 +56,7 @@ export default function ApplicationForm(props: Props) {
       </div>
 
       <div>
-        <label htmlFor="job_title" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="job_title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Job title
         </label>
         <input
@@ -70,16 +70,16 @@ export default function ApplicationForm(props: Props) {
       </div>
 
       <div>
-        <label htmlFor="location" className="block text-sm font-medium text-gray-700">
-          Location <span className="text-gray-400">(leave blank for N/A)</span>
+        <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Location <span className="text-gray-400 dark:text-gray-500">(leave blank for N/A)</span>
         </label>
         <input id="location" name="location" defaultValue={a?.location ?? ''} className={field} />
         {err.location && <p className={errText}>{err.location}</p>}
       </div>
 
       <div>
-        <label htmlFor="salary_min" className="block text-sm font-medium text-gray-700">
-          Salary range (USD) <span className="text-gray-400">(leave blank for N/A)</span>
+        <label htmlFor="salary_min" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Salary range (USD) <span className="text-gray-400 dark:text-gray-500">(leave blank for N/A)</span>
         </label>
         <div className="mt-1 flex items-center gap-2">
           <input
@@ -93,7 +93,7 @@ export default function ApplicationForm(props: Props) {
             defaultValue={a?.salary_min ?? ''}
             className={`${fieldBase} w-full min-w-0 flex-1`}
           />
-          <span className="text-gray-400">–</span>
+          <span className="text-gray-400 dark:text-gray-500">–</span>
           <input
             id="salary_max"
             name="salary_max"
@@ -112,7 +112,7 @@ export default function ApplicationForm(props: Props) {
       </div>
 
       <div>
-        <label htmlFor="application_date" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="application_date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Application date
         </label>
         <input
@@ -127,7 +127,7 @@ export default function ApplicationForm(props: Props) {
       </div>
 
       <div>
-        <label htmlFor="status" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Status
         </label>
         <select
@@ -146,8 +146,8 @@ export default function ApplicationForm(props: Props) {
       </div>
 
       <div>
-        <label htmlFor="dashboard_url" className="block text-sm font-medium text-gray-700">
-          Application dashboard link <span className="text-gray-400">(leave blank for N/A)</span>
+        <label htmlFor="dashboard_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Application dashboard link <span className="text-gray-400 dark:text-gray-500">(leave blank for N/A)</span>
         </label>
         <input
           id="dashboard_url"
@@ -160,7 +160,7 @@ export default function ApplicationForm(props: Props) {
       </div>
 
       <div>
-        <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="notes" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Notes
         </label>
         <textarea id="notes" name="notes" rows={3} defaultValue={a?.notes ?? ''} className={field} />
@@ -175,7 +175,7 @@ export default function ApplicationForm(props: Props) {
         >
           {pending ? 'Saving…' : isEdit ? 'Save changes' : 'Add application'}
         </button>
-        <Link href="/applications" className="text-sm text-gray-500 hover:text-gray-900">
+        <Link href="/applications" className="text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
           Cancel
         </Link>
       </div>

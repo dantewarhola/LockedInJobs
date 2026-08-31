@@ -9,7 +9,7 @@ export default function AuthCodeErrorPage() {
         { href: '/forgot-password', label: 'Request a new link' },
       ]}
     >
-      <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+      <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/50 dark:text-red-300">
         The confirmation or reset link is invalid or has expired. Request a new one and try again.
       </p>
     </AuthCard>

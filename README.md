@@ -75,6 +75,12 @@ A blank or `N/A` Status is imported as the `N/A` status. You get a preview
 with invalid rows flagged before anything is written; only valid rows are
 imported.
 
+## Theme
+
+Light / Dark / System toggle in the nav and on the auth pages. The choice is
+stored in `localStorage` and applied before first paint (no flash); "System"
+follows `prefers-color-scheme` and updates live when the OS setting changes.
+
 ## Files
 
 `/files` — upload and download **PDF-only** documents (resume, cover letters,

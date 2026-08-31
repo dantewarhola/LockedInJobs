@@ -31,7 +31,7 @@ export default function ImportPreview({
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
           {validCount} row{validCount === 1 ? '' : 's'} ready to import
           {skipped > 0 && `, ${skipped} will be skipped`}.
         </p>
@@ -48,14 +48,14 @@ export default function ImportPreview({
       </div>
 
       {state.status === 'error' && (
-        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/50 dark:text-red-300">
           {state.message}
         </p>
       )}
 
-      <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
-        <table className="min-w-full divide-y divide-gray-200 text-sm">
-          <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-gray-500">
+      <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+        <table className="min-w-full divide-y divide-gray-200 text-sm dark:divide-gray-800">
+          <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-gray-500 dark:bg-gray-800 dark:text-gray-400">
             <tr>
               <th className="px-3 py-2">Row</th>
               <th className="px-3 py-2">Business</th>
@@ -67,31 +67,31 @@ export default function ImportPreview({
               <th className="px-3 py-2">Issues</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
             {rows.map((r) => {
               const v = r.values;
               return (
-                <tr key={r.index} className={v ? '' : 'bg-red-50'}>
-                  <td className="px-3 py-2 text-gray-500">{r.index}</td>
-                  <td className="px-3 py-2 text-gray-900">
+                <tr key={r.index} className={v ? '' : 'bg-red-50 dark:bg-red-950/40'}>
+                  <td className="px-3 py-2 text-gray-500 dark:text-gray-400">{r.index}</td>
+                  <td className="px-3 py-2 text-gray-900 dark:text-gray-100">
                     {v ? v.company_name : cell(r.raw.Business)}
                   </td>
-                  <td className="px-3 py-2 text-gray-700">
+                  <td className="px-3 py-2 text-gray-700 dark:text-gray-300">
                     {v ? v.job_title : cell(r.raw['Job Title'])}
                   </td>
-                  <td className="px-3 py-2 text-gray-700">
+                  <td className="px-3 py-2 text-gray-700 dark:text-gray-300">
                     {v ? (v.location ?? 'N/A') : cell(r.raw.Location)}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-2 text-gray-700">
+                  <td className="whitespace-nowrap px-3 py-2 text-gray-700 dark:text-gray-300">
                     {v ? formatSalaryRange(v.salary_min, v.salary_max) : cell(r.raw.Salary)}
                   </td>
-                  <td className="px-3 py-2 text-gray-700">
+                  <td className="px-3 py-2 text-gray-700 dark:text-gray-300">
                     {v ? v.application_date : cell(r.raw['Application Date'])}
                   </td>
                   <td className="px-3 py-2">
                     {v ? <StatusBadge status={v.status} /> : cell(r.raw.Status)}
                   </td>
-                  <td className="px-3 py-2 text-red-700">{r.errors.join('; ')}</td>
+                  <td className="px-3 py-2 text-red-700 dark:text-red-400">{r.errors.join('; ')}</td>
                 </tr>
               );
             })}

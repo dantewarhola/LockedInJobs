@@ -17,11 +17,11 @@ export default async function ApplicationsPage() {
   return (
     <section className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-gray-900">Applications</h1>
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Applications</h1>
         <div className="flex items-center gap-3">
           <Link
             href="/applications/import"
-            className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50"
+            className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
           >
             Import from Excel
           </Link>
@@ -34,7 +34,7 @@ export default async function ApplicationsPage() {
         </div>
       </div>
       {loadError ? (
-        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/50 dark:text-red-300">
           {loadError}
         </p>
       ) : (

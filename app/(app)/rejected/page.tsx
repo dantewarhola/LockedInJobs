@@ -15,14 +15,14 @@ export default async function RejectedPage() {
 
   return (
     <section className="space-y-4">
-      <h1 className="text-xl font-semibold text-gray-900">Rejected</h1>
+      <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Rejected</h1>
       {loadError ? (
-        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/50 dark:text-red-300">
           {loadError}
         </p>
       ) : (
         <>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             {applications.length} rejected application{applications.length === 1 ? '' : 's'}.
           </p>
           <RejectedTable applications={applications} />

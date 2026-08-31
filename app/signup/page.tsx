@@ -13,7 +13,7 @@ export default function SignupPage() {
   if (state.status === 'check-email') {
     return (
       <AuthCard title="Almost there" links={[{ href: '/login', label: 'Back to sign in' }]}>
-        <p className="rounded-md bg-green-50 px-3 py-2 text-sm text-green-800">
+        <p className="rounded-md bg-green-50 px-3 py-2 text-sm text-green-800 dark:bg-green-950/50 dark:text-green-300">
           Check your email for a confirmation link. Once confirmed, you can sign in.
         </p>
       </AuthCard>
@@ -24,14 +24,14 @@ export default function SignupPage() {
     <AuthCard title="Create your account" links={[{ href: '/login', label: 'Back to sign in' }]}>
       <form action={formAction} className="space-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Email
           </label>
           <input id="email" name="email" type="email" autoComplete="email" required className={authFieldClass} />
           {err.email && <p className={authErrorClass}>{err.email}</p>}
         </div>
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Password
           </label>
           <input
@@ -45,7 +45,7 @@ export default function SignupPage() {
           {err.password && <p className={authErrorClass}>{err.password}</p>}
         </div>
         <div>
-          <label htmlFor="confirm" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="confirm" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Confirm password
           </label>
           <input
@@ -59,7 +59,7 @@ export default function SignupPage() {
           {err.confirm && <p className={authErrorClass}>{err.confirm}</p>}
         </div>
         {state.error && (
-          <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+          <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/50 dark:text-red-300">
             {state.error}
           </p>
         )}

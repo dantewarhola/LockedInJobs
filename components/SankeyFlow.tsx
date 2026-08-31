@@ -62,7 +62,7 @@ export default function SankeyFlow({ data }: { data: SankeyData }) {
   }, [data]);
 
   if (!graph) {
-    return <p className="text-sm text-gray-400">Not enough data yet.</p>;
+    return <p className="text-sm text-gray-400 dark:text-gray-500">Not enough data yet.</p>;
   }
 
   const nodes = graph.nodes as SNode[];
@@ -131,10 +131,13 @@ export default function SankeyFlow({ data }: { data: SankeyData }) {
                   dy="0.35em"
                   textAnchor={anchor}
                   fontSize={12}
-                  fill={active ? '#111827' : '#9ca3af'}
-                  stroke="#ffffff"
                   strokeWidth={3}
                   paintOrder="stroke"
+                  className={
+                    active
+                      ? 'fill-gray-900 stroke-gray-50 dark:fill-gray-100 dark:stroke-gray-950'
+                      : 'fill-gray-400 stroke-gray-50 dark:stroke-gray-950'
+                  }
                 >
                   {n.name} ({Math.round(n.value ?? 0)})
                 </text>

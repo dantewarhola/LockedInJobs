@@ -22,8 +22,8 @@ export default async function DashboardPage() {
   if (loadError) {
     return (
       <section className="space-y-4">
-        <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
-        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Dashboard</h1>
+        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/50 dark:text-red-300">
           {loadError}
         </p>
       </section>
@@ -34,7 +34,7 @@ export default async function DashboardPage() {
 
   return (
     <section className="space-y-6">
-      <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
+      <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Dashboard</h1>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
         <StatCard label="Total applications" value={String(stats.total)} />
@@ -58,18 +58,18 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <h2 className="mb-2 text-sm font-medium text-gray-700">Applications over time</h2>
+        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <h2 className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Applications over time</h2>
           <AppsOverTimeChart data={stats.overTime} />
         </div>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <h2 className="mb-2 text-sm font-medium text-gray-700">Status breakdown</h2>
+        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <h2 className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Status breakdown</h2>
           <StatusBreakdownChart data={stats.statusBreakdown} />
         </div>
       </div>
 
-      <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-        <h2 className="mb-2 text-sm font-medium text-gray-700">Application flow</h2>
+      <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <h2 className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Application flow</h2>
         <SankeyFlow data={computeFlow(applications)} />
       </div>
     </section>

@@ -15,7 +15,7 @@ export default async function EditApplicationPage({
 
   return (
     <section className="space-y-4">
-      <h1 className="text-xl font-semibold text-gray-900">Edit application</h1>
+      <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Edit application</h1>
       <ApplicationForm mode="edit" application={application} />
     </section>
   );

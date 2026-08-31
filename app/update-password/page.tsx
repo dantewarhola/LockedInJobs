@@ -14,7 +14,7 @@ export default function UpdatePasswordPage() {
     <AuthCard title="Choose a new password">
       <form action={formAction} className="space-y-4">
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             New password
           </label>
           <input
@@ -28,7 +28,7 @@ export default function UpdatePasswordPage() {
           {err.password && <p className={authErrorClass}>{err.password}</p>}
         </div>
         <div>
-          <label htmlFor="confirm" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="confirm" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Confirm new password
           </label>
           <input
@@ -42,7 +42,7 @@ export default function UpdatePasswordPage() {
           {err.confirm && <p className={authErrorClass}>{err.confirm}</p>}
         </div>
         {state.error && (
-          <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+          <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/50 dark:text-red-300">
             {state.error}
           </p>
         )}
