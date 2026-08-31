@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { formatBytes, formatDate, formatPercent, formatSalaryRange, formatUSD } from '../lib/format';
+import {
+  formatBytes,
+  formatDate,
+  formatDays,
+  formatPercent,
+  formatSalaryRange,
+  formatUSD,
+} from '../lib/format';
 
 describe('formatUSD', () => {
   it('formats null as N/A', () => expect(formatUSD(null)).toBe('N/A'));
@@ -28,6 +35,16 @@ describe('formatBytes', () => {
     expect(formatBytes(512)).toBe('512 B');
     expect(formatBytes(2048)).toBe('2 KB');
     expect(formatBytes(1_500_000)).toBe('1.4 MB');
+  });
+});
+
+describe('formatDays', () => {
+  it('renders an em dash for null', () => expect(formatDays(null)).toBe('—'));
+  it('renders sub-day gaps as "<1 day"', () => expect(formatDays(0.4)).toBe('<1 day'));
+  it('renders a rounded singular day', () => expect(formatDays(1.2)).toBe('1 day'));
+  it('renders rounded plural days', () => {
+    expect(formatDays(2.6)).toBe('3 days');
+    expect(formatDays(12)).toBe('12 days');
   });
 });
 

@@ -87,3 +87,5 @@ export function flattenErrors(err: z.ZodError): Record<string, string> {
   }
   return out;
 }
+
+export const weeklyGoalSchema = z.coerce.number().int().min(1).max(100);
