@@ -29,3 +29,35 @@ export interface Application {
   created_at: string;
   updated_at: string;
 }
+
+export interface ApplicationEvent {
+  id: string;
+  application_id: string;
+  user_id: string;
+  from_status: Status | null;
+  to_status: Status;
+  changed_at: string; // ISO timestamp
+}
+
+export interface UserSettings {
+  user_id: string;
+  weekly_goal: number;
+}
+
+/** A status that represents an employer response to an application. */
+export const RESPONSE_STATUSES: readonly Status[] = [
+  'Online Assessment',
+  'Interview',
+  'Offer',
+  'Rejected',
+];
+
+/** Stages whose dwell time we measure. Excludes terminal / non-progress states. */
+export const TIMED_STAGES: readonly Status[] = [
+  'Applied',
+  'Online Assessment',
+  'Interview',
+  'Offer',
+];
+
+export const DEFAULT_WEEKLY_GOAL = 5;
