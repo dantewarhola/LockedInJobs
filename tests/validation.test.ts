@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { applicationSchema, flattenErrors, parseApplicationForm, toRow } from '../lib/validation';
+import {
+  applicationSchema,
+  flattenErrors,
+  parseApplicationForm,
+  toRow,
+  weeklyGoalSchema,
+} from '../lib/validation';
 
 const base = {
   company_name: 'Acme',
@@ -125,5 +131,21 @@ describe('parseApplicationForm', () => {
       dashboard_url: '',
       notes: '',
     });
+  });
+});
+
+describe('weeklyGoalSchema', () => {
+  it('accepts whole numbers 1 through 100', () => {
+    expect(weeklyGoalSchema.parse('5')).toBe(5);
+    expect(weeklyGoalSchema.parse('1')).toBe(1);
+    expect(weeklyGoalSchema.parse('100')).toBe(100);
+  });
+
+  it('rejects zero, negatives, over 100, and non-integers', () => {
+    expect(weeklyGoalSchema.safeParse('0').success).toBe(false);
+    expect(weeklyGoalSchema.safeParse('-3').success).toBe(false);
+    expect(weeklyGoalSchema.safeParse('101').success).toBe(false);
+    expect(weeklyGoalSchema.safeParse('2.5').success).toBe(false);
+    expect(weeklyGoalSchema.safeParse('abc').success).toBe(false);
   });
 });
