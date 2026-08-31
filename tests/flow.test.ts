@@ -36,11 +36,9 @@ describe('computeFlow', () => {
     const f = computeFlow([]);
     expect(f.nodes).toEqual([]);
     expect(f.links).toEqual([]);
-    expect(f.excludedNA).toBe(0);
-    expect(f.total).toBe(0);
   });
 
-  it('cascades reached counts through the funnel', () => {
+  it('splits Total into Applied / Rejected / Awaiting / No status and cascades the pipeline', () => {
     const f = computeFlow([
       ...mk('Applied', 3),
       ...mk('Online Assessment', 2),
@@ -51,30 +49,69 @@ describe('computeFlow', () => {
       ...mk('Ghosted', 2),
       ...mk('N/A', 5),
     ]);
+
+    // Total splits
+    expect(linkVal(f, 'Total', 'Rejected')).toBe(4);
+    expect(linkVal(f, 'Total', 'Awaiting response')).toBe(3);
+    expect(linkVal(f, 'Total', 'No status')).toBe(5);
+    // reachedOA (5) + withdrawn (1) + ghosted (2) = 8
+    expect(linkVal(f, 'Total', 'Applied')).toBe(8);
+
+    // Applied splits
     expect(linkVal(f, 'Applied', 'OA')).toBe(5); // 2 + 1 + 2
-    expect(linkVal(f, 'OA', 'Interview')).toBe(3); // 1 + 2
-    expect(linkVal(f, 'Interview', 'Offer')).toBe(2);
-    expect(linkVal(f, 'Applied', 'Rejected')).toBe(4);
     expect(linkVal(f, 'Applied', 'Withdrawn')).toBe(1);
     expect(linkVal(f, 'Applied', 'Ghosted')).toBe(2);
-    expect(f.excludedNA).toBe(5);
-    expect(f.total).toBe(20);
+
+    // forward chain
+    expect(linkVal(f, 'OA', 'Interview')).toBe(3); // 1 + 2
+    expect(linkVal(f, 'Interview', 'Offer')).toBe(2);
+  });
+
+  it('keeps the Total node balanced (outflow equals application count)', () => {
+    const apps = [
+      ...mk('Applied', 3),
+      ...mk('Online Assessment', 2),
+      ...mk('Interview', 1),
+      ...mk('Offer', 2),
+      ...mk('Rejected', 4),
+      ...mk('Withdrawn', 1),
+      ...mk('Ghosted', 2),
+      ...mk('N/A', 5),
+    ];
+    const f = computeFlow(apps);
+    const totalOut = f.links
+      .filter((l) => l.source === 'Total')
+      .reduce((s, l) => s + l.value, 0);
+    expect(totalOut).toBe(apps.length);
   });
 
   it('drops zero-value links and unused nodes', () => {
     const f = computeFlow([...mk('Applied', 2), ...mk('Rejected', 1)]);
-    expect(edges(f)).toEqual(['Applied->Rejected']);
-    expect(f.nodes).toEqual(['Applied', 'Rejected']);
+    expect(edges(f)).toEqual(['Total->Rejected', 'Total->Awaiting response']);
+    expect(f.nodes).toEqual(['Total', 'Rejected', 'Awaiting response']);
   });
 
   it('builds the whole forward chain from a single Offer', () => {
     const f = computeFlow(mk('Offer', 1));
-    expect(edges(f)).toEqual(['Applied->OA', 'OA->Interview', 'Interview->Offer']);
-    expect(f.nodes).toEqual(['Applied', 'OA', 'Interview', 'Offer']);
+    expect(edges(f)).toEqual([
+      'Total->Applied',
+      'Applied->OA',
+      'OA->Interview',
+      'Interview->Offer',
+    ]);
+    expect(f.nodes).toEqual(['Total', 'Applied', 'OA', 'Interview', 'Offer']);
   });
 
   it('keeps nodes in canonical order regardless of link order', () => {
-    const f = computeFlow([...mk('Ghosted', 1), ...mk('Offer', 1)]);
-    expect(f.nodes).toEqual(['Applied', 'OA', 'Interview', 'Offer', 'Ghosted']);
+    const f = computeFlow([...mk('Ghosted', 1), ...mk('Offer', 1), ...mk('N/A', 1)]);
+    expect(f.nodes).toEqual([
+      'Total',
+      'Applied',
+      'OA',
+      'Interview',
+      'Offer',
+      'Ghosted',
+      'No status',
+    ]);
   });
 });

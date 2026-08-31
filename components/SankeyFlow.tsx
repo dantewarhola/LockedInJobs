@@ -26,6 +26,7 @@ const HEIGHT = 300;
 const MARGIN = { top: 12, right: 132, bottom: 12, left: 78 };
 
 const NODE_COLOR: Record<string, string> = {
+  Total: '#334155',
   Applied: '#2563eb',
   OA: '#4f46e5',
   Interview: '#d97706',
@@ -33,6 +34,8 @@ const NODE_COLOR: Record<string, string> = {
   Rejected: '#dc2626',
   Withdrawn: '#6b7280',
   Ghosted: '#9ca3af',
+  'Awaiting response': '#93c5fd',
+  'No status': '#d1d5db',
 };
 const colorOf = (name: string) => NODE_COLOR[name] ?? '#94a3b8';
 
@@ -86,7 +89,7 @@ export default function SankeyFlow({ data }: { data: SankeyData }) {
         preserveAspectRatio="xMidYMid meet"
         className="h-auto w-full"
         role="img"
-        aria-label="Application flow diagram: Applied to OA to Interview to Offer, with Rejected, Withdrawn and Ghosted branching from Applied"
+        aria-label="Application flow diagram: Total applications split into Applied, Rejected, still-awaiting and no-status; Applied then flows through OA, Interview and Offer, with Withdrawn and Ghosted branching off"
       >
         <g fill="none">
           {links.map((l, i) => (
@@ -140,9 +143,8 @@ export default function SankeyFlow({ data }: { data: SankeyData }) {
         </g>
       </svg>
       <figcaption className="text-xs text-gray-400">
-        Inferred from current status, not tracked transitions.
-        {data.excludedNA > 0 &&
-          ` ${data.excludedNA} of ${data.total} excluded — no status.`}
+        Inferred from current status, not tracked transitions. &quot;Awaiting response&quot; is
+        still at Applied; &quot;No status&quot; is status N/A.
       </figcaption>
     </figure>
   );

@@ -56,12 +56,21 @@ imported.
 
 ## Application flow (Sankey)
 
-The dashboard has an "Application flow" Sankey widget: Applied → OA → Interview →
-Offer, with Rejected / Withdrawn / Ghosted branching off Applied. Because only the
-current status of each application is stored (not its history), the flows are
-**inferred** — anyone currently at "Interview" is counted as having passed through
-"OA", etc. Applications still sitting at a stage are not drawn as an outgoing flow,
-and `N/A` applications are excluded.
+The dashboard has an "Application flow" Sankey widget:
+
+```
+Total ─┬─> Applied ─┬─> OA ──> Interview ──> Offer
+       │            ├─> Withdrawn
+       │            └─> Ghosted
+       ├─> Rejected
+       ├─> Awaiting response   (still at "Applied")
+       └─> No status           (status "N/A")
+```
+
+Because only the current status of each application is stored (not its history),
+the forward stages are **inferred** — anyone currently at "Interview" is counted
+as having passed through "OA", etc. Every application is represented exactly once,
+so the Total node equals the real application count.
 
 ## Notes
 
