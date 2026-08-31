@@ -5,6 +5,7 @@ const links = [
   { href: '/', label: 'Dashboard' },
   { href: '/applications', label: 'Applications' },
   { href: '/rejected', label: 'Rejected' },
+  { href: '/files', label: 'Files' },
 ];
 
 export default function Nav() {

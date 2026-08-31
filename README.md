@@ -14,7 +14,9 @@ Vitest · Playwright · deployed on Vercel.
 
 1. **Supabase project** — create one at https://supabase.com.
 2. **Migrations** — apply every file in `supabase/migrations/` in order
-   (`0001_applications.sql`, then `0002_status_na.sql`):
+   (`0001_applications.sql`, `0002_status_na.sql`, `0003_files_storage.sql`).
+   `0003` creates the private `application-files` storage bucket and its
+   per-user access policies:
    - CLI: `npx supabase link --project-ref <ref>` then `npx supabase db push`
    - or paste each file into the Supabase SQL Editor and run.
 3. **Auth configuration** (Authentication section of the dashboard):
@@ -72,6 +74,15 @@ Salary may be a range (`$80,000 - $120,000`), a single number, or `N/A`.
 A blank or `N/A` Status is imported as the `N/A` status. You get a preview
 with invalid rows flagged before anything is written; only valid rows are
 imported.
+
+## Files
+
+`/files` — upload and download **PDF-only** documents (resume, cover letters,
+certifications, letters of recommendation), up to 15 MB each. Files live in a
+private Supabase Storage bucket under a folder named with your user id; storage
+policies plus the bucket's `allowed_mime_types`/`file_size_limit` enforce
+PDF-only and per-user isolation. Downloads use short-lived signed URLs. No public
+or shared links.
 
 ## Application flow (Sankey)
 

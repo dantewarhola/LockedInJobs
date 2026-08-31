@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatDate, formatPercent, formatSalaryRange, formatUSD } from '../lib/format';
+import { formatBytes, formatDate, formatPercent, formatSalaryRange, formatUSD } from '../lib/format';
 
 describe('formatUSD', () => {
   it('formats null as N/A', () => expect(formatUSD(null)).toBe('N/A'));
@@ -20,6 +20,14 @@ describe('formatPercent', () => {
     expect(formatPercent(0)).toBe('0%');
     expect(formatPercent(0.4266)).toBe('43%');
     expect(formatPercent(1)).toBe('100%');
+  });
+});
+
+describe('formatBytes', () => {
+  it('formats bytes, KB and MB', () => {
+    expect(formatBytes(512)).toBe('512 B');
+    expect(formatBytes(2048)).toBe('2 KB');
+    expect(formatBytes(1_500_000)).toBe('1.4 MB');
   });
 });
 

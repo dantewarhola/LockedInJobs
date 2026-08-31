@@ -19,6 +19,12 @@ export function formatPercent(rate: number): string {
   return `${Math.round(rate * 100)}%`;
 }
 
+export function formatBytes(n: number): string {
+  if (n < 1024) return `${n} B`;
+  if (n < 1024 * 1024) return `${Math.round(n / 1024)} KB`;
+  return `${(n / (1024 * 1024)).toFixed(1)} MB`;
+}
+
 /** Month/day only, zero-padded, e.g. "01/05". Year is intentionally dropped. */
 export function formatDate(iso: string): string {
   const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
