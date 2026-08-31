@@ -33,7 +33,7 @@ describe('computeStats', () => {
     expect(s.avgSalary).toBeNull();
     expect(s.overTime).toEqual([]);
     expect(s.statusBreakdown.every((b) => b.count === 0)).toBe(true);
-    expect(s.statusBreakdown).toHaveLength(7);
+    expect(s.statusBreakdown).toHaveLength(8);
   });
 
   it('counts total and open (open excludes Rejected/Withdrawn/Ghosted)', () => {
@@ -104,6 +104,6 @@ describe('computeStats', () => {
     expect(map.Applied).toBe(2);
     expect(map.Offer).toBe(1);
     expect(map.Rejected).toBe(0);
-    expect(s.statusBreakdown).toHaveLength(7);
+    expect(s.statusBreakdown).toHaveLength(8);
   });
 });

@@ -1,7 +1,12 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    serverActions: {
+      // xlsx uploads + the preview-confirm round trip
+      bodySizeLimit: '5mb',
+    },
+  },
 };
 
 export default nextConfig;

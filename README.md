@@ -12,9 +12,10 @@ Vitest · Playwright · deployed on Vercel.
 ## Local setup
 
 1. **Supabase project** — create one at https://supabase.com.
-2. **Migration** — apply `supabase/migrations/0001_applications.sql`:
+2. **Migrations** — apply every file in `supabase/migrations/` in order
+   (`0001_applications.sql`, then `0002_status_na.sql`):
    - CLI: `npx supabase link --project-ref <ref>` then `npx supabase db push`
-   - or paste it into the Supabase SQL Editor and run.
+   - or paste each file into the Supabase SQL Editor and run.
 3. **User** — Authentication → Users → Add user. Create your single account
    (email + password). There is no sign-up page by design.
 4. **Env** — copy `.env.local.example` to `.env.local` and fill in
@@ -44,8 +45,18 @@ Vitest · Playwright · deployed on Vercel.
 4. Deploy. In Supabase → Authentication → URL Configuration, add your Vercel
    domain to the Site URL / redirect allow list.
 
+## Importing from Excel
+
+`/applications` → **Import from Excel**. Upload a `.xlsx` with columns
+`Business, Job Title, Location, Salary, Application Date, Status, Link`.
+Salary may be a range (`$80,000 - $120,000`), a single number, or `N/A`.
+A blank or `N/A` Status is imported as the `N/A` status. You get a preview
+with invalid rows flagged before anything is written; only valid rows are
+imported.
+
 ## Notes
 
+- Status `N/A` means the application did not state one.
 - Only the current status of each application is stored, not history. An
   application that interviewed and was then rejected counts as a rejection, not
   an interview.
