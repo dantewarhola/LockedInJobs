@@ -1,4 +1,4 @@
-import RejectedTable from '@/components/RejectedTable';
+import RejectedApplicationsView from '@/components/RejectedApplicationsView';
 import { getRejectedApplications } from '@/lib/applications';
 import type { Application } from '@/lib/types';
 
@@ -21,12 +21,7 @@ export default async function RejectedPage() {
           {loadError}
         </p>
       ) : (
-        <>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            {applications.length} rejected application{applications.length === 1 ? '' : 's'}.
-          </p>
-          <RejectedTable applications={applications} />
-        </>
+        <RejectedApplicationsView applications={applications} />
       )}
     </section>
   );

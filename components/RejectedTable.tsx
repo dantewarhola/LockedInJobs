@@ -1,13 +1,19 @@
 import Link from 'next/link';
 import DeleteButton from './DeleteButton';
-import { formatDate, formatSalaryRange } from '@/lib/format';
+import { formatDate, formatDateFull, formatSalaryRange } from '@/lib/format';
 import type { Application } from '@/lib/types';
 
-export default function RejectedTable({ applications }: { applications: Application[] }) {
+export default function RejectedTable({
+  applications,
+  emptyMessage = 'No rejected applications. Keep going.',
+}: {
+  applications: Application[];
+  emptyMessage?: string;
+}) {
   if (applications.length === 0) {
     return (
       <p className="rounded-md border border-dashed border-gray-300 p-6 text-center text-gray-500 dark:border-gray-700 dark:text-gray-400">
-        No rejected applications. Keep going.
+        {emptyMessage}
       </p>
     );
   }
@@ -37,8 +43,8 @@ export default function RejectedTable({ applications }: { applications: Applicat
               <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-300">
                 {formatSalaryRange(a.salary_min, a.salary_max)}
               </td>
-              <td className="px-4 py-2 text-gray-700 dark:text-gray-300">
-                {formatDate(a.application_date)}
+              <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-300">
+                {formatDateFull(a.application_date)}
               </td>
               <td className="px-4 py-2 text-gray-700 dark:text-gray-300">
                 {a.rejected_at ? formatDate(a.rejected_at.slice(0, 10)) : '—'}

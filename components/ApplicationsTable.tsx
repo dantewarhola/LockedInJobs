@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import DeleteButton from './DeleteButton';
 import StatusBadge from './StatusBadge';
-import { formatDate, formatSalaryRange } from '@/lib/format';
+import { formatDateFull, formatSalaryRange } from '@/lib/format';
 import type { Application } from '@/lib/types';
 
 export default function ApplicationsTable({
@@ -48,8 +48,8 @@ export default function ApplicationsTable({
               <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-300">
                 {formatSalaryRange(a.salary_min, a.salary_max)}
               </td>
-              <td className="px-4 py-2 text-gray-700 dark:text-gray-300">
-                {formatDate(a.application_date)}
+              <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-300">
+                {formatDateFull(a.application_date)}
               </td>
               <td className="px-4 py-2">
                 <StatusBadge status={a.status} />

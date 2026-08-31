@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import ApplicationsTable from '@/components/ApplicationsTable';
+import OpenApplicationsView from '@/components/OpenApplicationsView';
 import { getActiveApplications } from '@/lib/applications';
 import { getAllApplicationEvents } from '@/lib/events';
 import { daysInCurrentStage } from '@/lib/metrics';
@@ -46,16 +46,7 @@ export default async function ApplicationsPage() {
           {loadError}
         </p>
       ) : (
-        <>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            {applications.length} open application{applications.length === 1 ? '' : 's'}.
-          </p>
-          <ApplicationsTable
-            applications={applications}
-            stageDays={stageDays}
-            emptyMessage="No active applications yet. Add your first one."
-          />
-        </>
+        <OpenApplicationsView applications={applications} stageDays={stageDays} />
       )}
     </section>
   );
