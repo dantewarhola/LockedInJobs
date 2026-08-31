@@ -19,8 +19,9 @@ function todayISO(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
-const field =
-  'mt-1 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600';
+const fieldBase =
+  'rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600';
+const field = `mt-1 w-full ${fieldBase}`;
 const errText = 'mt-1 text-sm text-red-600';
 
 export default function ApplicationForm(props: Props) {
@@ -76,37 +77,38 @@ export default function ApplicationForm(props: Props) {
         {err.location && <p className={errText}>{err.location}</p>}
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="salary_min" className="block text-sm font-medium text-gray-700">
-            Salary min (USD)
-          </label>
+      <div>
+        <label htmlFor="salary_min" className="block text-sm font-medium text-gray-700">
+          Salary range (USD) <span className="text-gray-400">(leave blank for N/A)</span>
+        </label>
+        <div className="mt-1 flex items-center gap-2">
           <input
             id="salary_min"
             name="salary_min"
             type="number"
             min="0"
             step="1"
+            placeholder="Min"
+            aria-label="Salary min (USD)"
             defaultValue={a?.salary_min ?? ''}
-            className={field}
+            className={`${fieldBase} w-full min-w-0 flex-1`}
           />
-          {err.salary_min && <p className={errText}>{err.salary_min}</p>}
-        </div>
-        <div>
-          <label htmlFor="salary_max" className="block text-sm font-medium text-gray-700">
-            Salary max (USD)
-          </label>
+          <span className="text-gray-400">–</span>
           <input
             id="salary_max"
             name="salary_max"
             type="number"
             min="0"
             step="1"
+            placeholder="Max"
+            aria-label="Salary max (USD)"
             defaultValue={a?.salary_max ?? ''}
-            className={field}
+            className={`${fieldBase} w-full min-w-0 flex-1`}
           />
-          {err.salary_max && <p className={errText}>{err.salary_max}</p>}
         </div>
+        {(err.salary_min || err.salary_max) && (
+          <p className={errText}>{err.salary_min ?? err.salary_max}</p>
+        )}
       </div>
 
       <div>
