@@ -4,7 +4,7 @@ import { THEME_INIT_SCRIPT } from '@/lib/theme';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Job Tracking',
+  title: 'LockedInJobs',
   description: 'Private job application tracker',
 };
 

@@ -13,7 +13,7 @@ import {
 export type FormState = { error?: string; fieldErrors?: Record<string, string> };
 
 function revalidateAll() {
-  revalidatePath('/');
+  revalidatePath('/dashboard');
   revalidatePath('/applications');
   revalidatePath('/rejected');
 }

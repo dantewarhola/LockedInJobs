@@ -13,7 +13,7 @@ test('log in, add an application, reject it, see it move to the Rejected page', 
   await page.getByLabel('Password').fill(password!);
   await page.getByRole('button', { name: 'Sign in' }).click();
 
-  await expect(page).toHaveURL('/');
+  await expect(page).toHaveURL('/dashboard');
 
   await page.goto('/applications/new');
   await page.getByLabel('Business name').fill(company);

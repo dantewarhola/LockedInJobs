@@ -1,4 +1,4 @@
-# Job Tracking
+# LockedInJobs
 
 Multi-user job application tracker. Anyone can sign up; each account sees only its
 own applications (enforced by Postgres row-level security). Record applications,
@@ -27,7 +27,7 @@ Vitest · Playwright · deployed on Vercel.
    - **Email Templates** — change the link in two templates so it points at this
      app's confirm route instead of Supabase's default:
      - *Confirm signup*:
-       `<a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/">Confirm your email</a>`
+       `<a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/dashboard">Confirm your email</a>`
      - *Reset password*:
        `<a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&next=/update-password">Reset your password</a>`
 4. **Env** — copy `.env.local.example` to `.env.local` and fill in

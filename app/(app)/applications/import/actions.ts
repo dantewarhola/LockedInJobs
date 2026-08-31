@@ -68,7 +68,7 @@ export async function commitImport(_prev: CommitState, formData: FormData): Prom
   const { error } = await supabase.from('applications').insert(rows);
   if (error) return { status: 'error', message: error.message };
 
-  revalidatePath('/');
+  revalidatePath('/dashboard');
   revalidatePath('/applications');
   revalidatePath('/rejected');
   redirect('/applications');

@@ -20,7 +20,7 @@ export default function AuthCard({
       <div className="absolute right-4 top-4">
         <ThemeToggle />
       </div>
-      <h1 className="mb-1 text-2xl font-semibold text-gray-900 dark:text-gray-100">Job Tracking</h1>
+      <h1 className="mb-1 text-2xl font-semibold text-gray-900 dark:text-gray-100">LockedInJobs</h1>
       <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">{title}</p>
       {children}
       {links && links.length > 0 && (

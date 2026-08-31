@@ -26,7 +26,7 @@ export async function login(_prevState: AuthState, formData: FormData): Promise<
     return { error: 'Invalid email or password.' };
   }
 
-  redirect('/');
+  redirect('/dashboard');
 }
 
 export async function signUp(_prevState: AuthState, formData: FormData): Promise<AuthState> {
@@ -38,7 +38,7 @@ export async function signUp(_prevState: AuthState, formData: FormData): Promise
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
-      emailRedirectTo: `${await getSiteUrl()}/auth/confirm?next=/`,
+      emailRedirectTo: `${await getSiteUrl()}/auth/confirm?next=/dashboard`,
     },
   });
   if (error) return { error: error.message };
@@ -86,7 +86,7 @@ export async function updatePassword(_prevState: AuthState, formData: FormData):
   const { error } = await supabase.auth.updateUser({ password });
   if (error) return { error: error.message };
 
-  redirect('/');
+  redirect('/dashboard');
 }
 
 export async function logout(): Promise<void> {

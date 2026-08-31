@@ -3,7 +3,7 @@ import { logout } from '@/app/login/actions';
 import ThemeToggle from './ThemeToggle';
 
 const links = [
-  { href: '/', label: 'Dashboard' },
+  { href: '/dashboard', label: 'Dashboard' },
   { href: '/applications', label: 'Applications' },
   { href: '/rejected', label: 'Rejected' },
   { href: '/files', label: 'Files' },
@@ -14,7 +14,7 @@ export default function Nav() {
     <header className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
       <nav className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
         <div className="flex items-center gap-4">
-          <span className="font-semibold text-gray-900 dark:text-gray-100">Job Tracking</span>
+          <span className="font-semibold text-gray-900 dark:text-gray-100">LockedInJobs</span>
           <ul className="flex gap-3 text-sm">
             {links.map((l) => (
               <li key={l.href}>

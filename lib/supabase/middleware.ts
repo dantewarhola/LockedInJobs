@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-const PUBLIC_PATHS = ['/login', '/signup', '/forgot-password', '/auth'];
+const PUBLIC_PATHS = ['/', '/login', '/signup', '/forgot-password', '/auth'];
 // Signed-in users are bounced away from these to the dashboard.
 const GUEST_ONLY_PATHS = ['/login', '/signup', '/forgot-password'];
 
@@ -50,7 +50,7 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
 
   if (user && matches(GUEST_ONLY_PATHS, pathname)) {
     const url = request.nextUrl.clone();
-    url.pathname = '/';
+    url.pathname = '/dashboard';
     return NextResponse.redirect(url);
   }
 
