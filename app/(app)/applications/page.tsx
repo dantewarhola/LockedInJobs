@@ -38,10 +38,15 @@ export default async function ApplicationsPage() {
           {loadError}
         </p>
       ) : (
-        <ApplicationsTable
-          applications={applications}
-          emptyMessage="No active applications yet. Add your first one."
-        />
+        <>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {applications.length} open application{applications.length === 1 ? '' : 's'}.
+          </p>
+          <ApplicationsTable
+            applications={applications}
+            emptyMessage="No active applications yet. Add your first one."
+          />
+        </>
       )}
     </section>
   );
