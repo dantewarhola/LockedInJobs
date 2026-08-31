@@ -47,6 +47,7 @@ export default function SankeyFlow({ data }: { data: SankeyData }) {
     const layout = sankey<NodeExtra, LinkExtra>()
       .nodeId((d) => d.name)
       .nodeAlign(sankeyLeft)
+      .nodeSort(null) // keep the top-to-bottom order from data.nodes
       .nodeWidth(14)
       .nodePadding(18)
       .extent([

@@ -7,15 +7,15 @@ import type { SankeyData } from '../lib/flow';
 const data: SankeyData = {
   nodes: [
     'Total',
+    'Awaiting response',
     'Applied',
     'OA',
     'Interview',
     'Offer',
-    'Rejected',
     'Withdrawn',
     'Ghosted',
-    'Awaiting response',
     'No status',
+    'Rejected',
   ],
   links: [
     { source: 'Total', target: 'Applied', value: 15 },

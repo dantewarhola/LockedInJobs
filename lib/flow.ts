@@ -12,17 +12,18 @@ export interface SankeyData {
   links: FlowLink[];
 }
 
+// Top-to-bottom vertical order within each Sankey column.
 const NODE_ORDER = [
   'Total',
+  'Awaiting response',
   'Applied',
   'OA',
   'Interview',
   'Offer',
-  'Rejected',
   'Withdrawn',
   'Ghosted',
-  'Awaiting response',
   'No status',
+  'Rejected',
 ];
 
 /**

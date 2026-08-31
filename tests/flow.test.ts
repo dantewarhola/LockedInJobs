@@ -88,7 +88,7 @@ describe('computeFlow', () => {
   it('drops zero-value links and unused nodes', () => {
     const f = computeFlow([...mk('Applied', 2), ...mk('Rejected', 1)]);
     expect(edges(f)).toEqual(['Total->Rejected', 'Total->Awaiting response']);
-    expect(f.nodes).toEqual(['Total', 'Rejected', 'Awaiting response']);
+    expect(f.nodes).toEqual(['Total', 'Awaiting response', 'Rejected']);
   });
 
   it('builds the whole forward chain from a single Offer', () => {
