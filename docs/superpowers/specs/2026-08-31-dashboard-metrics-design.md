@@ -205,9 +205,12 @@ Sorted-middle for odd length, mean of the two middles for even, `null` for empty
 2. For each consecutive pair `(e[i], e[i+1])`: if `e[i].to_status ∈ TIMED_STAGES`,
    add `(e[i+1].changed_at − e[i].changed_at) / 86_400_000` to that stage's
    sample list.
-3. For the last event `e[n]`: if `e[n].to_status ∈ TIMED_STAGES`, add
-   `(now − e[n].changed_at) / 86_400_000` (the application is currently sitting
-   in that stage). If `e[n].to_status` is terminal, add nothing.
+3. For the last event `e[n]`: add `(now − e[n].changed_at) / 86_400_000` (the
+   application is currently sitting in that stage) **only if both**:
+   `e[n].to_status ∈ TIMED_STAGES` **and** the group has ≥ 2 events. The
+   ≥ 2-events guard excludes backfilled applications whose lone seed event
+   (`to_status = 'Applied'`) does not reflect their real current stage. If
+   `e[n].to_status` is terminal, add nothing.
 4. For each stage in `TIMED_STAGES` order with a non-empty sample list, emit
    `{ stage, medianDays: median(samples), count: samples.length }`. Drop stages
    with no samples.
@@ -348,6 +351,7 @@ Pass to the components. `computeStats` / `computeFlow` usage is unchanged.
     Applied 2, OA 3, Interview 5, Offer 2 (open).
   - app Applied → Rejected: Applied stage gets its dwell; Rejected contributes
     nothing.
+  - app with only a seed `Applied` event (group of 1) contributes nothing.
   - stage with no samples is absent from the result.
   - result is ordered `Applied, Online Assessment, Interview, Offer`.
 - `weeklyProgress`:
