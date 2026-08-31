@@ -44,20 +44,4 @@ export interface UserSettings {
   weekly_goal: number;
 }
 
-/** A status that represents an employer response to an application. */
-export const RESPONSE_STATUSES: readonly Status[] = [
-  'Online Assessment',
-  'Interview',
-  'Offer',
-  'Rejected',
-];
-
-/** Stages whose dwell time we measure. Excludes terminal / non-progress states. */
-export const TIMED_STAGES: readonly Status[] = [
-  'Applied',
-  'Online Assessment',
-  'Interview',
-  'Offer',
-];
-
 export const DEFAULT_WEEKLY_GOAL = 5;

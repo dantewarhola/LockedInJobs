@@ -1,78 +1,34 @@
-import {
-  RESPONSE_STATUSES,
-  TIMED_STAGES,
-  type Application,
-  type ApplicationEvent,
-  type Status,
-} from './types';
+import type { Application, ApplicationEvent } from './types';
 
 const DAY_MS = 86_400_000;
 
-export function median(values: number[]): number | null {
-  if (values.length === 0) return null;
-  const sorted = [...values].sort((a, b) => a - b);
-  const mid = Math.floor(sorted.length / 2);
-  return sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
-}
+/**
+ * Whole days the application has been sitting in its current stage.
+ *
+ * - Status `Applied` (including anything changed back to Applied) is measured
+ *   from `application_date`.
+ * - Any other status is measured from the most recent event that moved the
+ *   application *into* that status. Applications with no such event (older rows
+ *   backfilled before the event log existed) fall back to `application_date`.
+ */
+export function daysInCurrentStage(
+  app: Application,
+  events: ApplicationEvent[],
+  now: Date,
+): number {
+  let anchorMs = Date.parse(`${app.application_date}T00:00:00`);
 
-function groupSortedByApp(events: ApplicationEvent[]): ApplicationEvent[][] {
-  const map = new Map<string, ApplicationEvent[]>();
-  for (const e of events) {
-    const list = map.get(e.application_id);
-    if (list) list.push(e);
-    else map.set(e.application_id, [e]);
-  }
-  return [...map.values()].map((list) =>
-    [...list].sort((a, b) => Date.parse(a.changed_at) - Date.parse(b.changed_at)),
-  );
-}
-
-export function medianDaysToFirstResponse(events: ApplicationEvent[]): number | null {
-  const gaps: number[] = [];
-  for (const group of groupSortedByApp(events)) {
-    if (group.length === 0) continue;
-    const appliedAt = Date.parse(group[0].changed_at);
-    const response = group.find((e) => RESPONSE_STATUSES.includes(e.to_status));
-    if (!response) continue;
-    gaps.push(Math.max(0, (Date.parse(response.changed_at) - appliedAt) / DAY_MS));
-  }
-  return median(gaps);
-}
-
-export interface StageDwell {
-  stage: Status;
-  medianDays: number;
-  count: number;
-}
-
-export function medianDaysInStage(events: ApplicationEvent[], now: Date): StageDwell[] {
-  const samples = new Map<Status, number[]>();
-  const add = (stage: Status, days: number) => {
-    const list = samples.get(stage);
-    if (list) list.push(days);
-    else samples.set(stage, [days]);
-  };
-
-  for (const group of groupSortedByApp(events)) {
-    for (let i = 0; i < group.length - 1; i += 1) {
-      const stage = group[i].to_status;
-      if (!TIMED_STAGES.includes(stage)) continue;
-      add(stage, (Date.parse(group[i + 1].changed_at) - Date.parse(group[i].changed_at)) / DAY_MS);
+  if (app.status !== 'Applied') {
+    let latest = Number.NEGATIVE_INFINITY;
+    for (const e of events) {
+      if (e.application_id !== app.id || e.to_status !== app.status) continue;
+      const t = Date.parse(e.changed_at);
+      if (t > latest) latest = t;
     }
-    const last = group[group.length - 1];
-    if (group.length >= 2 && last && TIMED_STAGES.includes(last.to_status)) {
-      add(last.to_status, Math.max(0, (now.getTime() - Date.parse(last.changed_at)) / DAY_MS));
-    }
+    if (latest > Number.NEGATIVE_INFINITY) anchorMs = latest;
   }
 
-  const out: StageDwell[] = [];
-  for (const stage of TIMED_STAGES) {
-    const list = samples.get(stage);
-    if (list && list.length > 0) {
-      out.push({ stage, medianDays: median(list) as number, count: list.length });
-    }
-  }
-  return out;
+  return Math.max(0, Math.floor((now.getTime() - anchorMs) / DAY_MS));
 }
 
 export function toLocalDateString(d: Date): string {

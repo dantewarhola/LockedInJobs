@@ -6,9 +6,11 @@ import type { Application } from '@/lib/types';
 
 export default function ApplicationsTable({
   applications,
+  stageDays,
   emptyMessage,
 }: {
   applications: Application[];
+  stageDays: Record<string, number>;
   emptyMessage: string;
 }) {
   if (applications.length === 0) {
@@ -30,6 +32,7 @@ export default function ApplicationsTable({
             <th className="px-4 py-2">Salary</th>
             <th className="px-4 py-2">Applied</th>
             <th className="px-4 py-2">Status</th>
+            <th className="px-4 py-2">Time</th>
             <th className="px-4 py-2">Link</th>
             <th className="px-4 py-2" />
           </tr>
@@ -50,6 +53,12 @@ export default function ApplicationsTable({
               </td>
               <td className="px-4 py-2">
                 <StatusBadge status={a.status} />
+              </td>
+              <td
+                className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-300"
+                title={`${stageDays[a.id] ?? 0} day${(stageDays[a.id] ?? 0) === 1 ? '' : 's'} in this stage`}
+              >
+                {stageDays[a.id] ?? 0}d
               </td>
               <td className="px-4 py-2 text-gray-700 dark:text-gray-300">
                 {a.dashboard_url ? (

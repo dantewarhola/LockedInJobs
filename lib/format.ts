@@ -25,13 +25,6 @@ export function formatBytes(n: number): string {
   return `${(n / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export function formatDays(n: number | null): string {
-  if (n === null) return '—';
-  if (n < 1) return '<1 day';
-  const rounded = Math.round(n);
-  return `${rounded} ${rounded === 1 ? 'day' : 'days'}`;
-}
-
 /** Month/day only, zero-padded, e.g. "01/05". Year is intentionally dropped. */
 export function formatDate(iso: string): string {
   const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
