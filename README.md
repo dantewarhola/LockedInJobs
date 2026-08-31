@@ -1,8 +1,9 @@
 # Job Tracking
 
-Private, single-user job application tracker. Record applications, track status,
-view aggregate stats. Applications set to **Rejected** move automatically to a
-dedicated Rejected page.
+Multi-user job application tracker. Anyone can sign up; each account sees only its
+own applications (enforced by Postgres row-level security). Record applications,
+track status, view aggregate stats. Applications set to **Rejected** move
+automatically to a dedicated Rejected page.
 
 ## Stack
 
@@ -16,8 +17,17 @@ Vitest · Playwright · deployed on Vercel.
    (`0001_applications.sql`, then `0002_status_na.sql`):
    - CLI: `npx supabase link --project-ref <ref>` then `npx supabase db push`
    - or paste each file into the Supabase SQL Editor and run.
-3. **User** — Authentication → Users → Add user. Create your single account
-   (email + password). There is no sign-up page by design.
+3. **Auth configuration** (Authentication section of the dashboard):
+   - **Providers → Email**: keep "Confirm email" ON.
+   - **URL Configuration**: set Site URL to your app origin and add these to
+     "Redirect URLs": `http://localhost:3000/**` and
+     `https://<your-vercel-domain>/**`.
+   - **Email Templates** — change the link in two templates so it points at this
+     app's confirm route instead of Supabase's default:
+     - *Confirm signup*:
+       `<a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/">Confirm your email</a>`
+     - *Reset password*:
+       `<a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&next=/update-password">Reset your password</a>`
 4. **Env** — copy `.env.local.example` to `.env.local` and fill in
    `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` from
    Project Settings → API.
@@ -28,7 +38,16 @@ Vitest · Playwright · deployed on Vercel.
    npm run dev
    ```
 
-   Open http://localhost:3000 and sign in.
+   Open http://localhost:3000, create an account, confirm via the email link,
+   then sign in.
+
+## Accounts
+
+- `/signup` — open registration, email + password. A confirmation email must be
+  clicked before the first sign-in.
+- `/forgot-password` — sends a reset link; it lands on `/update-password`.
+- Data is isolated per account by row-level security; `user_id` defaults to the
+  authenticated user on insert, and every policy checks `auth.uid() = user_id`.
 
 ## Tests
 

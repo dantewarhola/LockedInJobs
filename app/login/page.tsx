@@ -1,6 +1,7 @@
 'use client';
 
 import { useActionState } from 'react';
+import AuthCard, { authFieldClass } from '@/components/AuthCard';
 import { login, type AuthState } from './actions';
 
 const initialState: AuthState = {};
@@ -9,8 +10,13 @@ export default function LoginPage() {
   const [state, formAction, pending] = useActionState(login, initialState);
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-sm flex-col justify-center px-4">
-      <h1 className="mb-6 text-2xl font-semibold text-gray-900">Job Tracking</h1>
+    <AuthCard
+      title="Sign in to your account"
+      links={[
+        { href: '/signup', label: 'Create account' },
+        { href: '/forgot-password', label: 'Forgot password?' },
+      ]}
+    >
       <form action={formAction} className="space-y-4">
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -22,7 +28,7 @@ export default function LoginPage() {
             type="email"
             autoComplete="email"
             required
-            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+            className={authFieldClass}
           />
         </div>
         <div>
@@ -35,7 +41,7 @@ export default function LoginPage() {
             type="password"
             autoComplete="current-password"
             required
-            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+            className={authFieldClass}
           />
         </div>
         {state.error && (
@@ -51,6 +57,6 @@ export default function LoginPage() {
           {pending ? 'Signing in…' : 'Sign in'}
         </button>
       </form>
-    </main>
+    </AuthCard>
   );
 }
