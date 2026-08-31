@@ -31,3 +31,10 @@ export function formatDate(iso: string): string {
   if (!m) return iso;
   return `${m[2]}/${m[3]}`;
 }
+
+/** Full US date, zero-padded, e.g. "01/05/2026". */
+export function formatDateFull(iso: string): string {
+  const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return iso;
+  return `${m[2]}/${m[3]}/${m[1]}`;
+}

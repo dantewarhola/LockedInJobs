@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { formatBytes, formatDate, formatPercent, formatSalaryRange, formatUSD } from '../lib/format';
+import {
+  formatBytes,
+  formatDate,
+  formatDateFull,
+  formatPercent,
+  formatSalaryRange,
+  formatUSD,
+} from '../lib/format';
 
 describe('formatUSD', () => {
   it('formats null as N/A', () => expect(formatUSD(null)).toBe('N/A'));
@@ -38,5 +45,18 @@ describe('formatDate', () => {
   });
   it('formats an ISO timestamp by its date part', () => {
     expect(formatDate('2026-03-09T14:20:00Z')).toBe('03/09');
+  });
+});
+
+describe('formatDateFull', () => {
+  it('formats an ISO date as zero-padded MM/DD/YYYY', () => {
+    expect(formatDateFull('2026-01-05')).toBe('01/05/2026');
+    expect(formatDateFull('2024-12-31')).toBe('12/31/2024');
+  });
+  it('formats an ISO timestamp by its date part', () => {
+    expect(formatDateFull('2026-03-09T14:20:00Z')).toBe('03/09/2026');
+  });
+  it('returns the input unchanged when it is not an ISO date', () => {
+    expect(formatDateFull('not-a-date')).toBe('not-a-date');
   });
 });
