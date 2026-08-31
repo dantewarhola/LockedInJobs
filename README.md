@@ -54,6 +54,15 @@ A blank or `N/A` Status is imported as the `N/A` status. You get a preview
 with invalid rows flagged before anything is written; only valid rows are
 imported.
 
+## Application flow (Sankey)
+
+The dashboard has an "Application flow" Sankey widget: Applied → OA → Interview →
+Offer, with Rejected / Withdrawn / Ghosted branching off Applied. Because only the
+current status of each application is stored (not its history), the flows are
+**inferred** — anyone currently at "Interview" is counted as having passed through
+"OA", etc. Applications still sitting at a stage are not drawn as an outgoing flow,
+and `N/A` applications are excluded.
+
 ## Notes
 
 - Status `N/A` means the application did not state one.

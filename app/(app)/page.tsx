@@ -1,7 +1,9 @@
 import AppsOverTimeChart from '@/components/AppsOverTimeChart';
+import SankeyFlow from '@/components/SankeyFlow';
 import StatCard from '@/components/StatCard';
 import StatusBreakdownChart from '@/components/StatusBreakdownChart';
 import { getAllApplications } from '@/lib/applications';
+import { computeFlow } from '@/lib/flow';
 import { formatPercent, formatUSD } from '@/lib/format';
 import { computeStats } from '@/lib/stats';
 import type { Application } from '@/lib/types';
@@ -64,6 +66,11 @@ export default async function DashboardPage() {
           <h2 className="mb-2 text-sm font-medium text-gray-700">Status breakdown</h2>
           <StatusBreakdownChart data={stats.statusBreakdown} />
         </div>
+      </div>
+
+      <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+        <h2 className="mb-2 text-sm font-medium text-gray-700">Application flow</h2>
+        <SankeyFlow data={computeFlow(applications)} />
       </div>
     </section>
   );
