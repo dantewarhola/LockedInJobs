@@ -57,6 +57,15 @@ describe('normalizeDate', () => {
     expect(normalizeDate('')).toBeNull();
     expect(normalizeDate('not a date')).toBeNull();
   });
+  it('assumes the current year for a year-less M/D date (not 2001)', () => {
+    const year = new Date().getFullYear();
+    expect(normalizeDate('1/5')).toBe(`${year}-01-05`);
+    expect(normalizeDate('12/25')).toBe(`${year}-12-25`);
+  });
+  it('assumes the current year for a year-less text date (not 2001)', () => {
+    const year = new Date().getFullYear();
+    expect(normalizeDate('Jan 5')).toBe(`${year}-01-05`);
+  });
 });
 
 describe('recordToRow', () => {
