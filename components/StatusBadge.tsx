@@ -8,6 +8,7 @@ const styles: Record<Status, string> = {
   Rejected: 'bg-red-50 text-red-700',
   Withdrawn: 'bg-gray-100 text-gray-600',
   Ghosted: 'bg-gray-100 text-gray-500',
+  'N/A': 'bg-gray-100 text-gray-400',
 };
 
 export default function StatusBadge({ status }: { status: Status }) {

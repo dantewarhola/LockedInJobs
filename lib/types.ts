@@ -6,6 +6,7 @@ export const STATUS_VALUES = [
   'Rejected',
   'Withdrawn',
   'Ghosted',
+  'N/A',
 ] as const;
 
 export type Status = (typeof STATUS_VALUES)[number];
