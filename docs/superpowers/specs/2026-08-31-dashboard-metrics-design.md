@@ -1,7 +1,15 @@
 # Dashboard Metrics — Design Spec
 
 Date: 2026-08-31
-Status: Approved for planning
+Status: Implemented, then partially superseded
+
+> **Update (2026-08-31):** the "median time to first response" stat card and the
+> "time in each stage" chart were removed after implementation. Per-application
+> stage timing is now shown as a **Time** column on the `/applications` table
+> (`daysInCurrentStage` in `lib/metrics.ts`): days since `application_date` when
+> the status is `Applied`, otherwise days since the most recent event that moved
+> the application into its current status. The `application_events` log, the
+> weekly goal bar, and the streak widget are unchanged.
 
 ## Purpose
 

@@ -1,15 +1,23 @@
 import Link from 'next/link';
 import ApplicationsTable from '@/components/ApplicationsTable';
 import { getActiveApplications } from '@/lib/applications';
+import { getAllApplicationEvents } from '@/lib/events';
+import { daysInCurrentStage } from '@/lib/metrics';
 import type { Application } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
 export default async function ApplicationsPage() {
   let applications: Application[] = [];
+  let stageDays: Record<string, number> = {};
   let loadError: string | null = null;
   try {
-    applications = await getActiveApplications();
+    const [apps, events] = await Promise.all([getActiveApplications(), getAllApplicationEvents()]);
+    applications = apps;
+    const now = new Date();
+    stageDays = Object.fromEntries(
+      apps.map((a) => [a.id, daysInCurrentStage(a, events, now)]),
+    );
   } catch (e) {
     loadError = e instanceof Error ? e.message : 'Failed to load applications.';
   }
@@ -44,6 +52,7 @@ export default async function ApplicationsPage() {
           </p>
           <ApplicationsTable
             applications={applications}
+            stageDays={stageDays}
             emptyMessage="No active applications yet. Add your first one."
           />
         </>
