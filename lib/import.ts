@@ -72,7 +72,20 @@ export function normalizeDate(raw: unknown): string | null {
   m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
   if (m) return `${m[3]}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}`;
 
-  const d = new Date(s);
+  // Year-less "M/D" — assume the current year.
+  m = s.match(/^(\d{1,2})\/(\d{1,2})$/);
+  if (m) {
+    return `${new Date().getFullYear()}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}`;
+  }
+
+  // Fall back to the engine's parser. For a year-less month name like "Jan 5"
+  // it would otherwise default to 2001, so append the current year first —
+  // but only when the string actually contains a month name, so genuine
+  // garbage still fails to parse.
+  const hasYear = /\d{4}/.test(s);
+  const hasMonthName = /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i.test(s);
+  const d =
+    hasYear || !hasMonthName ? new Date(s) : new Date(`${s} ${new Date().getFullYear()}`);
   return Number.isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
 }
 
