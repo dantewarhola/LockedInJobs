@@ -82,7 +82,7 @@ export default function ImportPreview({
                   <td className="px-3 py-2 text-gray-700">
                     {v ? (v.location ?? 'N/A') : cell(r.raw.Location)}
                   </td>
-                  <td className="px-3 py-2 text-gray-700">
+                  <td className="whitespace-nowrap px-3 py-2 text-gray-700">
                     {v ? formatSalaryRange(v.salary_min, v.salary_max) : cell(r.raw.Salary)}
                   </td>
                   <td className="px-3 py-2 text-gray-700">

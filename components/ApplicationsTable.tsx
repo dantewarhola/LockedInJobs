@@ -40,7 +40,7 @@ export default function ApplicationsTable({
               <td className="px-4 py-2 font-medium text-gray-900">{a.company_name}</td>
               <td className="px-4 py-2 text-gray-700">{a.job_title}</td>
               <td className="px-4 py-2 text-gray-700">{a.location ?? 'N/A'}</td>
-              <td className="px-4 py-2 text-gray-700">
+              <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                 {formatSalaryRange(a.salary_min, a.salary_max)}
               </td>
               <td className="px-4 py-2 text-gray-700">{formatDate(a.application_date)}</td>
