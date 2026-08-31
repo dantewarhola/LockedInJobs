@@ -24,5 +24,11 @@ describe('formatPercent', () => {
 });
 
 describe('formatDate', () => {
-  it('formats an ISO date', () => expect(formatDate('2024-01-05')).toBe('Jan 5, 2024'));
+  it('formats an ISO date as zero-padded DD/MM', () => {
+    expect(formatDate('2024-01-05')).toBe('05/01');
+    expect(formatDate('2026-12-31')).toBe('31/12');
+  });
+  it('formats an ISO timestamp by its date part', () => {
+    expect(formatDate('2026-03-09T14:20:00Z')).toBe('09/03');
+  });
 });

@@ -5,8 +5,8 @@ export interface Rate {
   rate: number;
 }
 
-export interface MonthCount {
-  month: string; // 'YYYY-MM'
+export interface DayCount {
+  day: string; // 'YYYY-MM-DD'
   count: number;
 }
 
@@ -22,7 +22,7 @@ export interface DashboardStats {
   offers: Rate;
   rejections: Rate;
   avgSalary: number | null;
-  overTime: MonthCount[];
+  overTime: DayCount[];
   statusBreakdown: StatusCount[];
 }
 
@@ -51,14 +51,14 @@ export function computeStats(apps: Application[]): DashboardStats {
           ) / withSalary.length,
         );
 
-  const monthMap = new Map<string, number>();
+  const dayMap = new Map<string, number>();
   for (const a of apps) {
-    const month = a.application_date.slice(0, 7);
-    monthMap.set(month, (monthMap.get(month) ?? 0) + 1);
+    const day = a.application_date.slice(0, 10);
+    dayMap.set(day, (dayMap.get(day) ?? 0) + 1);
   }
-  const overTime: MonthCount[] = [...monthMap.entries()]
-    .map(([month, c]) => ({ month, count: c }))
-    .sort((a, b) => a.month.localeCompare(b.month));
+  const overTime: DayCount[] = [...dayMap.entries()]
+    .map(([day, c]) => ({ day, count: c }))
+    .sort((a, b) => a.day.localeCompare(b.day));
 
   const statusBreakdown: StatusCount[] = STATUS_VALUES.map((status) => ({
     status,

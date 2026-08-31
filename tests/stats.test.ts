@@ -82,15 +82,17 @@ describe('computeStats', () => {
     expect(s.avgSalary).toBeNull();
   });
 
-  it('groups applications by month, sorted ascending', () => {
+  it('groups applications by day, sorted ascending, only days with applications', () => {
     const s = computeStats([
-      app({ application_date: '2024-03-02' }),
-      app({ application_date: '2024-01-31' }),
-      app({ application_date: '2024-01-01' }),
+      app({ application_date: '2026-03-02' }),
+      app({ application_date: '2026-01-31' }),
+      app({ application_date: '2026-01-31' }),
+      app({ application_date: '2026-01-01' }),
     ]);
     expect(s.overTime).toEqual([
-      { month: '2024-01', count: 2 },
-      { month: '2024-03', count: 1 },
+      { day: '2026-01-01', count: 1 },
+      { day: '2026-01-31', count: 2 },
+      { day: '2026-03-02', count: 1 },
     ]);
   });
 
