@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import DeleteButton from './DeleteButton';
+import FavoriteButton from './FavoriteButton';
 import StatusBadge from './StatusBadge';
 import { formatDateFull, formatSalaryRange } from '@/lib/format';
 import type { Application } from '@/lib/types';
@@ -26,6 +27,9 @@ export default function ApplicationsTable({
       <table className="min-w-full divide-y divide-gray-200 text-sm dark:divide-gray-800">
         <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-gray-500 dark:bg-gray-800 dark:text-gray-400">
           <tr>
+            <th className="px-4 py-2 w-8">
+              <span className="sr-only">Favorite</span>
+            </th>
             <th className="px-4 py-2">Business</th>
             <th className="px-4 py-2">Title</th>
             <th className="px-4 py-2">Location</th>
@@ -40,6 +44,9 @@ export default function ApplicationsTable({
         <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
           {applications.map((a) => (
             <tr key={a.id}>
+              <td className="px-4 py-2">
+                <FavoriteButton id={a.id} favorite={a.favorite} />
+              </td>
               <td className="px-4 py-2 font-medium text-gray-900 dark:text-gray-100">
                 {a.company_name}
               </td>
