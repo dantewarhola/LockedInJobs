@@ -7,6 +7,7 @@ export async function getActiveApplications(): Promise<Application[]> {
     .from('applications')
     .select('*')
     .neq('status', 'Rejected')
+    .order('favorite', { ascending: false })
     .order('application_date', { ascending: false })
     .order('created_at', { ascending: false });
   if (error) throw new Error(error.message);

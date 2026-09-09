@@ -25,6 +25,7 @@ export interface Application {
   status: Status;
   dashboard_url: string | null;
   notes: string | null;
+  favorite: boolean;
   rejected_at: string | null;
   created_at: string;
   updated_at: string;

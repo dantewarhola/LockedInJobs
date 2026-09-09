@@ -45,6 +45,18 @@ export async function updateApplication(_prev: FormState, formData: FormData): P
   redirect(parsed.data.status === 'Rejected' ? '/rejected' : '/applications');
 }
 
+export async function toggleFavorite(formData: FormData): Promise<void> {
+  const id = String(formData.get('id') ?? '');
+  if (!id) return;
+  const favorite = String(formData.get('favorite') ?? '') === 'true';
+
+  const supabase = await createClient();
+  const { error } = await supabase.from('applications').update({ favorite }).eq('id', id);
+  if (error) throw new Error(error.message);
+
+  revalidateAll();
+}
+
 export async function deleteApplication(formData: FormData): Promise<void> {
   const id = String(formData.get('id') ?? '');
   if (!id) return;

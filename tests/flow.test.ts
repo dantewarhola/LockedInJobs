@@ -18,6 +18,7 @@ function mk(status: Status, n: number): Application[] {
       status,
       dashboard_url: null,
       notes: null,
+      favorite: false,
       rejected_at: null,
       created_at: '2026-01-01T00:00:00Z',
       updated_at: '2026-01-01T00:00:00Z',
