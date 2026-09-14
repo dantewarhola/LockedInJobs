@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import ThemeToggle from '@/components/ThemeToggle';
 import { createClient } from '@/lib/supabase/server';
@@ -93,6 +94,25 @@ export default async function LandingPage() {
                 Log in
               </Link>
             )}
+          </div>
+
+          <div className="mt-12 overflow-hidden rounded-lg border border-gray-200 shadow-sm dark:border-gray-800">
+            <Image
+              src="/dash_light.png"
+              alt="LockedInJobs dashboard preview"
+              width={2034}
+              height={1275}
+              priority
+              className="block w-full dark:hidden"
+            />
+            <Image
+              src="/dash_dark.png"
+              alt="LockedInJobs dashboard preview"
+              width={2025}
+              height={1281}
+              priority
+              className="hidden w-full dark:block"
+            />
           </div>
         </section>
 
