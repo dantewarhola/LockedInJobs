@@ -23,51 +23,63 @@ export default function ApplicationsTable({
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-      <table className="min-w-full divide-y divide-gray-200 text-sm dark:divide-gray-800">
+    <div className="rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+      <table className="w-full table-fixed divide-y divide-gray-200 text-sm dark:divide-gray-800">
+        <colgroup>
+          <col className="w-8" />
+          <col className="w-[18%]" />
+          <col className="w-[19%]" />
+          <col className="w-[12%]" />
+          <col className="w-[13%]" />
+          <col className="w-[11%]" />
+          <col className="w-[9%]" />
+          <col className="w-[5%]" />
+          <col className="w-[6%]" />
+          <col className="w-[7%]" />
+        </colgroup>
         <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-gray-500 dark:bg-gray-800 dark:text-gray-400">
           <tr>
-            <th className="px-4 py-2 w-8">
+            <th className="px-2 py-2">
               <span className="sr-only">Favorite</span>
             </th>
-            <th className="px-4 py-2">Business</th>
-            <th className="px-4 py-2">Title</th>
-            <th className="px-4 py-2">Location</th>
-            <th className="px-4 py-2">Salary</th>
-            <th className="px-4 py-2">Applied</th>
-            <th className="px-4 py-2">Status</th>
-            <th className="px-4 py-2">Time</th>
-            <th className="px-4 py-2">Link</th>
-            <th className="px-4 py-2" />
+            <th className="px-2 py-2">Business</th>
+            <th className="px-2 py-2">Title</th>
+            <th className="px-2 py-2">Location</th>
+            <th className="px-2 py-2">Salary</th>
+            <th className="px-2 py-2">Applied</th>
+            <th className="px-2 py-2">Status</th>
+            <th className="px-2 py-2">Time</th>
+            <th className="px-2 py-2">Link</th>
+            <th className="px-2 py-2" />
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
           {applications.map((a) => (
             <tr key={a.id}>
-              <td className="px-4 py-2">
+              <td className="px-2 py-2">
                 <FavoriteButton id={a.id} favorite={a.favorite} />
               </td>
-              <td className="px-4 py-2 font-medium text-gray-900 dark:text-gray-100">
+              <td className="break-words px-2 py-2 font-medium text-gray-900 dark:text-gray-100">
                 {a.company_name}
               </td>
-              <td className="px-4 py-2 text-gray-700 dark:text-gray-300">{a.job_title}</td>
-              <td className="px-4 py-2 text-gray-700 dark:text-gray-300">{a.location ?? 'N/A'}</td>
-              <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-300">
+              <td className="break-words px-2 py-2 text-gray-700 dark:text-gray-300">{a.job_title}</td>
+              <td className="break-words px-2 py-2 text-gray-700 dark:text-gray-300">{a.location ?? 'N/A'}</td>
+              <td className="break-words px-2 py-2 text-gray-700 dark:text-gray-300">
                 {formatSalaryRange(a.salary_min, a.salary_max)}
               </td>
-              <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-300">
+              <td className="break-words px-2 py-2 text-gray-700 dark:text-gray-300">
                 {formatDateFull(a.application_date)}
               </td>
-              <td className="px-4 py-2">
+              <td className="px-2 py-2">
                 <StatusBadge status={a.status} />
               </td>
               <td
-                className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-300"
+                className="break-words px-2 py-2 text-gray-700 dark:text-gray-300"
                 title={`${stageDays[a.id] ?? 0} day${(stageDays[a.id] ?? 0) === 1 ? '' : 's'} in this stage`}
               >
                 {stageDays[a.id] ?? 0}d
               </td>
-              <td className="px-4 py-2 text-gray-700 dark:text-gray-300">
+              <td className="break-words px-2 py-2 text-gray-700 dark:text-gray-300">
                 {a.dashboard_url ? (
                   <a
                     href={a.dashboard_url}
@@ -81,8 +93,8 @@ export default function ApplicationsTable({
                   'N/A'
                 )}
               </td>
-              <td className="px-4 py-2">
-                <div className="flex gap-3">
+              <td className="px-2 py-2">
+                <div className="flex flex-col gap-1">
                   <Link
                     href={`/applications/${a.id}/edit`}
                     className="text-blue-600 hover:underline dark:text-blue-400"
