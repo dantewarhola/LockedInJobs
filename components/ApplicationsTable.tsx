@@ -3,16 +3,64 @@ import DeleteButton from './DeleteButton';
 import FavoriteButton from './FavoriteButton';
 import StatusBadge from './StatusBadge';
 import { formatDateFull, formatSalaryRange } from '@/lib/format';
+import type { SortDirection, SortKey } from '@/lib/sort';
 import type { Application } from '@/lib/types';
+
+const SORTABLE_COLUMNS: { key: SortKey; label: string }[] = [
+  { key: 'company_name', label: 'Business' },
+  { key: 'job_title', label: 'Title' },
+  { key: 'location', label: 'Location' },
+  { key: 'salary', label: 'Salary' },
+  { key: 'application_date', label: 'Applied' },
+  { key: 'status', label: 'Status' },
+  { key: 'time', label: 'Time' },
+];
+
+function SortableHeader({
+  columnKey,
+  label,
+  sortKey,
+  sortDirection,
+  onSort,
+}: {
+  columnKey: SortKey;
+  label: string;
+  sortKey: SortKey | null;
+  sortDirection: SortDirection;
+  onSort: (key: SortKey) => void;
+}) {
+  const active = sortKey === columnKey;
+  return (
+    <th className="px-2 py-2">
+      <button
+        type="button"
+        onClick={() => onSort(columnKey)}
+        className="flex items-center gap-1 text-left uppercase tracking-wide hover:text-gray-900 dark:hover:text-gray-100"
+        aria-label={`Sort by ${label}`}
+      >
+        {label}
+        <span className="text-[10px]" aria-hidden="true">
+          {active ? (sortDirection === 'asc' ? '▲' : '▼') : '⇅'}
+        </span>
+      </button>
+    </th>
+  );
+}
 
 export default function ApplicationsTable({
   applications,
   stageDays,
   emptyMessage,
+  sortKey = null,
+  sortDirection = 'asc',
+  onSort,
 }: {
   applications: Application[];
   stageDays: Record<string, number>;
   emptyMessage: string;
+  sortKey?: SortKey | null;
+  sortDirection?: SortDirection;
+  onSort?: (key: SortKey) => void;
 }) {
   if (applications.length === 0) {
     return (
@@ -42,13 +90,22 @@ export default function ApplicationsTable({
             <th className="px-2 py-2">
               <span className="sr-only">Favorite</span>
             </th>
-            <th className="px-2 py-2">Business</th>
-            <th className="px-2 py-2">Title</th>
-            <th className="px-2 py-2">Location</th>
-            <th className="px-2 py-2">Salary</th>
-            <th className="px-2 py-2">Applied</th>
-            <th className="px-2 py-2">Status</th>
-            <th className="px-2 py-2">Time</th>
+            {SORTABLE_COLUMNS.map(({ key, label }) =>
+              onSort ? (
+                <SortableHeader
+                  key={key}
+                  columnKey={key}
+                  label={label}
+                  sortKey={sortKey}
+                  sortDirection={sortDirection}
+                  onSort={onSort}
+                />
+              ) : (
+                <th key={key} className="px-2 py-2">
+                  {label}
+                </th>
+              ),
+            )}
             <th className="px-2 py-2">Link</th>
             <th className="px-2 py-2" />
           </tr>
