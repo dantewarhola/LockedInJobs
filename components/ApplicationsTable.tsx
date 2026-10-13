@@ -71,14 +71,14 @@ export default function ApplicationsTable({
   }
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-      <table className="w-full table-fixed divide-y divide-gray-200 text-sm dark:divide-gray-800">
+    <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+      <table className="w-full min-w-[720px] table-fixed divide-y divide-gray-200 text-sm dark:divide-gray-800">
         <colgroup>
           <col className="w-8" />
           <col className="w-[18%]" />
-          <col className="w-[19%]" />
-          <col className="w-[12%]" />
-          <col className="w-[13%]" />
+          <col className="w-[17%]" />
+          <col className="w-[11%]" />
+          <col className="w-[16%]" />
           <col className="w-[11%]" />
           <col className="w-[9%]" />
           <col className="w-[5%]" />
@@ -121,7 +121,10 @@ export default function ApplicationsTable({
               </td>
               <td className="break-words px-2 py-2 text-gray-700 dark:text-gray-300">{a.job_title}</td>
               <td className="break-words px-2 py-2 text-gray-700 dark:text-gray-300">{a.location ?? 'N/A'}</td>
-              <td className="break-words px-2 py-2 text-gray-700 dark:text-gray-300">
+              <td
+                className="overflow-hidden text-ellipsis whitespace-nowrap px-2 py-2 text-gray-700 dark:text-gray-300"
+                title={formatSalaryRange(a.salary_min, a.salary_max)}
+              >
                 {formatSalaryRange(a.salary_min, a.salary_max)}
               </td>
               <td className="break-words px-2 py-2 text-gray-700 dark:text-gray-300">
