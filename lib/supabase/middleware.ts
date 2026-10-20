@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-const PUBLIC_PATHS = ['/', '/login', '/signup', '/forgot-password', '/auth'];
+const PUBLIC_PATHS = ['/', '/login', '/signup', '/forgot-password', '/auth', '/shared'];
 // Signed-in users are bounced away from these to the dashboard.
 const GUEST_ONLY_PATHS = ['/login', '/signup', '/forgot-password'];
 

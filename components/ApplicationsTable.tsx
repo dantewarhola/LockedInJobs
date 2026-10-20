@@ -51,6 +51,7 @@ export default function ApplicationsTable({
   applications,
   stageDays,
   emptyMessage,
+  readOnly = false,
   sortKey = null,
   sortDirection = 'asc',
   onSort,
@@ -58,6 +59,7 @@ export default function ApplicationsTable({
   applications: Application[];
   stageDays: Record<string, number>;
   emptyMessage: string;
+  readOnly?: boolean;
   sortKey?: SortKey | null;
   sortDirection?: SortDirection;
   onSort?: (key: SortKey) => void;
@@ -114,7 +116,22 @@ export default function ApplicationsTable({
           {applications.map((a) => (
             <tr key={a.id}>
               <td className="px-2 py-2">
-                <FavoriteButton id={a.id} favorite={a.favorite} />
+                {readOnly ? (
+                  a.favorite && (
+                    <svg
+                      viewBox="0 0 20 20"
+                      className="h-5 w-5 text-yellow-500"
+                      aria-label="Favorited"
+                    >
+                      <path
+                        d="M10 1.6l2.47 5.01 5.53.8-4 3.9.94 5.5L10 14.2l-4.95 2.6.94-5.5-4-3.9 5.53-.8L10 1.6z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  )
+                ) : (
+                  <FavoriteButton id={a.id} favorite={a.favorite} />
+                )}
               </td>
               <td className="break-words px-2 py-2 font-medium text-gray-900 dark:text-gray-100">
                 {a.company_name}
@@ -140,7 +157,11 @@ export default function ApplicationsTable({
                 {stageDays[a.id] ?? 0}d
               </td>
               <td className="break-words px-2 py-2 text-gray-700 dark:text-gray-300">
-                {a.dashboard_url ? (
+                {!a.dashboard_url ? (
+                  'N/A'
+                ) : readOnly ? (
+                  <span className="text-gray-400 dark:text-gray-500">On file</span>
+                ) : (
                   <a
                     href={a.dashboard_url}
                     target="_blank"
@@ -149,20 +170,20 @@ export default function ApplicationsTable({
                   >
                     Open
                   </a>
-                ) : (
-                  'N/A'
                 )}
               </td>
               <td className="px-2 py-2">
-                <div className="flex flex-col gap-1">
-                  <Link
-                    href={`/applications/${a.id}/edit`}
-                    className="text-blue-600 hover:underline dark:text-blue-400"
-                  >
-                    Edit
-                  </Link>
-                  <DeleteButton id={a.id} />
-                </div>
+                {!readOnly && (
+                  <div className="flex flex-col gap-1">
+                    <Link
+                      href={`/applications/${a.id}/edit`}
+                      className="text-blue-600 hover:underline dark:text-blue-400"
+                    >
+                      Edit
+                    </Link>
+                    <DeleteButton id={a.id} />
+                  </div>
+                )}
               </td>
             </tr>
           ))}

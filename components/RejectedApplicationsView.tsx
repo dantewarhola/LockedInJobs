@@ -10,8 +10,10 @@ const searchInputClass =
 
 export default function RejectedApplicationsView({
   applications,
+  readOnly = false,
 }: {
   applications: Application[];
+  readOnly?: boolean;
 }) {
   const [query, setQuery] = useState('');
   const filtered = useMemo(() => filterApplications(applications, query), [applications, query]);
@@ -34,6 +36,7 @@ export default function RejectedApplicationsView({
       </p>
       <RejectedTable
         applications={filtered}
+        readOnly={readOnly}
         emptyMessage={
           searching ? `No applications match "${query.trim()}".` : undefined
         }

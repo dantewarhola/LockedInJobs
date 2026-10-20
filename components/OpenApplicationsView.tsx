@@ -23,9 +23,11 @@ function downloadCSV(content: string, filename: string) {
 export default function OpenApplicationsView({
   applications,
   stageDays,
+  readOnly = false,
 }: {
   applications: Application[];
   stageDays: Record<string, number>;
+  readOnly?: boolean;
 }) {
   const [query, setQuery] = useState('');
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
@@ -64,14 +66,16 @@ export default function OpenApplicationsView({
           aria-label="Search applications"
           className={searchInputClass}
         />
-        <button
-          type="button"
-          onClick={handleExport}
-          disabled={sorted.length === 0}
-          className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
-        >
-          Export CSV
-        </button>
+        {!readOnly && (
+          <button
+            type="button"
+            onClick={handleExport}
+            disabled={sorted.length === 0}
+            className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
+          >
+            Export CSV
+          </button>
+        )}
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-400">
         {searching
@@ -81,6 +85,7 @@ export default function OpenApplicationsView({
       <ApplicationsTable
         applications={sorted}
         stageDays={stageDays}
+        readOnly={readOnly}
         sortKey={sortKey}
         sortDirection={sortDirection}
         onSort={handleSort}

@@ -6,9 +6,11 @@ import type { Application } from '@/lib/types';
 export default function RejectedTable({
   applications,
   emptyMessage = 'No rejected applications. Keep going.',
+  readOnly = false,
 }: {
   applications: Application[];
   emptyMessage?: string;
+  readOnly?: boolean;
 }) {
   if (applications.length === 0) {
     return (
@@ -50,15 +52,17 @@ export default function RejectedTable({
                 {a.rejected_at ? formatDate(a.rejected_at.slice(0, 10)) : '—'}
               </td>
               <td className="px-4 py-2">
-                <div className="flex gap-3">
-                  <Link
-                    href={`/applications/${a.id}/edit`}
-                    className="text-blue-600 hover:underline dark:text-blue-400"
-                  >
-                    Edit / un-reject
-                  </Link>
-                  <DeleteButton id={a.id} />
-                </div>
+                {!readOnly && (
+                  <div className="flex gap-3">
+                    <Link
+                      href={`/applications/${a.id}/edit`}
+                      className="text-blue-600 hover:underline dark:text-blue-400"
+                    >
+                      Edit / un-reject
+                    </Link>
+                    <DeleteButton id={a.id} />
+                  </div>
+                )}
               </td>
             </tr>
           ))}

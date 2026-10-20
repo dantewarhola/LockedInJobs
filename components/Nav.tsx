@@ -7,6 +7,7 @@ const links = [
   { href: '/applications', label: 'Applications' },
   { href: '/rejected', label: 'Rejected' },
   { href: '/files', label: 'Files' },
+  { href: '/share', label: 'Share' },
 ];
 
 export default function Nav() {
